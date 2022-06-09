@@ -1,6 +1,6 @@
 name: MurderMystery
-version: 2.1
-api: [3.0.0]
+version: 2.2-PM4
+api: [4.0.0]
 author: LeyKey
 main: mm\MurderMystery
 
@@ -8,3 +8,9 @@ commands:
   murdermystery:
     description: "Murder Mystery command"
     aliases: [mm, mrd]
+    permission: "murdermystery.edit"
+    
+permissions:
+  murdermystery.edit:
+    description: "Permission to all Setup Commands!"
+    default: op
