@@ -7,13 +7,13 @@ use mm\utils\SwordEntity;
 
 class DespawnSwordEntity extends Task{
     
-    public $entity;
+    public $sword;
 
     public function __construct(SwordEntity $entity){
         $this->sword = $entity;
     }
 
-    public function onRun(){
+    public function onRun(): void{
         if(!$this->sword->isClosed()){
             $this->sword->close();
         }
