@@ -21,7 +21,7 @@ class SpawnGoldTask extends Task{
             case Game::PHASE_GAME:
                 $spawns = (int) $this->plugin->plugin->getConfig()->get("GoldSpawns");
                 $spawn = mt_rand(1, $spawns);
-                $this->plugin->dropItem($this->plugin->map, 266, Position::fromObject(Vector::fromString($this->plugin->data["gold"]["gold-$spawn"])));
+                $this->plugin->dropItem($this->plugin->map, 266, Position::fromObject(Vector::fromString($this->plugin->data["gold"]["gold-$spawn"]), $this->plugin->map));
             break;
         }
     }
