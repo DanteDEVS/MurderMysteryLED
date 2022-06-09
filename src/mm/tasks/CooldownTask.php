@@ -7,12 +7,14 @@ use pocketmine\item\Item;
 use mm\game\Game;
 
 class CooldownTask extends Task{
+    
+    public $plugin;
 
     public function __construct(Game $plugin){
         $this->plugin = $plugin;
     }
 
-    public function onRun(int $ct){
+    public function onRun(){
         foreach($this->plugin->players as $player){
             if(isset($this->plugin->cooldown[$player->getName()])){
                 $item = $player->getInventory()->getItemInHand()->getId();
