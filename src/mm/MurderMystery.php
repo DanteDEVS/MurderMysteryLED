@@ -310,7 +310,7 @@ class MurderMystery extends PluginBase implements Listener{
             $index = $this->spawns[$player->getName()];
 
             $game->data["spawns"]["spawn-" . $index] = (new Vector($block->getPosition()->getX(), $block->getPosition()->getY() + 1.5, $block->getPosition()->getZ()))->__toString();
-            $player->sendMessage($this->prefix . "§7Spawn " . $index . " has been set to§6 " . round($block-getPosition()->getX()) . ", " . round($block->getPosition()->getY() + 1) . ", " . round($block->getPosition()->getZ()));
+            $player->sendMessage($this->prefix . "§7Spawn " . $index . " has been set to§6 " . round($block->getPosition()->getX()) . ", " . round($block->getPosition()->getY() + 1) . ", " . round($block->getPosition()->getZ()));
             if($index > 15){
                 $player->sendMessage($this->prefix . "§7All spawns have been set!");
                 unset($this->spawns[$player->getName()]);
@@ -325,7 +325,7 @@ class MurderMystery extends PluginBase implements Listener{
 
             $max = $this->getConfig()->get("GoldSpawns");
 
-            $game->data["gold"]["gold-" . $index] = (new Vector($block->getX(), $block->getPosition()->getY() + 1, $block->getPosition()->getZ()))->__toString();
+            $game->data["gold"]["gold-" . $index] = (new Vector($block->getPosition()->getX(), $block->getPosition()->getY() + 1, $block->getPosition()->getZ()))->__toString();
             $player->sendMessage($this->prefix . "§7Gold spawn " . $index . " has been set to§6 " . round($block->getPosition()->getX()) . ", " . round($block->getPosition()->getY() + 1) . ", " . round($block->getPosition()->getZ()));
             if($index > ($max - 1)){
                 $player->sendMessage($this->prefix . "§7All gold spawns have been set!");
