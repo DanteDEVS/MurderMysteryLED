@@ -16,7 +16,7 @@ class SpawnGoldTask extends Task{
         $this->plugin = $plugin;
     }
 
-    public function onRun(){
+    public function onRun(): void{
         switch($this->plugin->phase){
             case Game::PHASE_GAME:
                 $spawns = (int) $this->plugin->plugin->getConfig()->get("GoldSpawns");
