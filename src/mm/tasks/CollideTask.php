@@ -16,7 +16,7 @@ class CollideTask extends Task{
         $this->sword = $sword;
     }
 
-    public function onRun(){
+    public function onRun(): void{
         if(!$this->sword->isClosed()){
             foreach($this->plugin->players as $player){
                 if($this->sword->getPosition()->asVector3()->distance($player) < 2){
