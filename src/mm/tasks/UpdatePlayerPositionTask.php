@@ -7,12 +7,14 @@ use mm\game\Game;
 use pocketmine\world\Position;
 
 class UpdatePlayerPositionTask extends Task{
+    
+    public $plugin;
 
     public function __construct(Game $plugin){
         $this->plugin = $plugin;
     }
 
-    public function onRun(int $ct){
+    public function onRun(){
         foreach($this->plugin->players as $player){
             if($player === $this->plugin->getMurderer()){
                 $closest = null;
