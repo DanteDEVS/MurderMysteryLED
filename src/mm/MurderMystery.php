@@ -9,6 +9,10 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\{PlayerInteractEvent, PlayerChatEvent};
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\entity\Entity;
+use pocketmine\entity\EntityFactory;
+use pocketmine\entity\EntityDataHelper;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\world\World;
 
 use mm\utils\{GameChooser, SwordEntity, Vector};
 use mm\provider\Provider;
@@ -38,7 +42,9 @@ class MurderMystery extends PluginBase implements Listener{
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->provider->loadGames();
-        \pocketmine\entity\EntityFactory::getInstance()->register(SwordEntity::class, fn($world, $nbt) => new SwordEntity(\pocketmine\entity\EntityDataHelper::parseLocation($nbt, $world), $nbt)) : bool{
+	    EntityFactory::getInstance()->register(SwordEntity::class, function(World $world, CompoundTag $nbt) : SwordEntity{
+		          return new SwordEntity(EntityDataHelper::parseLocation($nbt, $world), null, $nbt);
+	    }, ['SwordEntity']);           
         if(strtolower($cmd) == "murdermystery"){
             if(count($args) == 0){
                 $sender->sendMessage("§7Use §b/murdermystery help");
