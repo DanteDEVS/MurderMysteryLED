@@ -14,7 +14,7 @@ class CooldownTask extends Task{
         $this->plugin = $plugin;
     }
 
-    public function onRun(){
+    public function onRun(): void{
         foreach($this->plugin->players as $player){
             if(isset($this->plugin->cooldown[$player->getName()])){
                 $item = $player->getInventory()->getItemInHand()->getId();
