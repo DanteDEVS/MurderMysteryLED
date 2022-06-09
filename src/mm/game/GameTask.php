@@ -3,7 +3,7 @@
 namespace mm\game;
 
 use pocketmine\world\{
-    Level,
+    World,
     Position
 };
 use pocketmine\world\sound\{BlazeShootSound, ClickSound, PopSound};
@@ -26,7 +26,7 @@ class GameTask extends Task{
         $this->plugin = $plugin;
     }
 
-    public function onRun(int $currentTick){
+    public function onRun(){
         $this->reloadSign();
 
         if($this->plugin->setup) return;
@@ -179,7 +179,7 @@ class GameTask extends Task{
 
         $signPos = Position::fromObject(Vector::fromString($this->plugin->data["joinsign"][0]), $this->plugin->plugin->getServer()->getWorldManager()->getWorldByName($this->plugin->data["joinsign"][1]));
 
-        if(!$signPos->getWorld() instanceof Level){
+        if(!$signPos->getWorld() instanceof World){
             return;
         }
 
@@ -196,7 +196,7 @@ class GameTask extends Task{
 
         if($this->plugin->setup){
             $sign = $signPos->getWorld()->getTile($signPos);
-            $sign->setText($signText[0], $signText[1], $signText[2], $signText[3]);
+            $sign->setText($signText[0]);
             return;
         }
 
@@ -226,7 +226,7 @@ class GameTask extends Task{
 
         $sign = $signPos->getWorld()->getTile($signPos);
         if($sign instanceof Sign){
-            $sign->setText($signText[0], $signText[1], $signText[2], $signText[3]);
+            $sign->setText($signText[0]);
         }
     }
 
