@@ -1,0 +1,10 @@
+name: MurderMystery
+version: 2.1
+api: [3.0.0]
+author: LeyKey
+main: mm\MurderMystery
+
+commands:
+  murdermystery:
+    description: "Murder Mystery command"
+    aliases: [mm, mrd]

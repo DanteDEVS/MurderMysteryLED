@@ -1,0 +1,69 @@
+#
+# MurderMystery plugin by LeyKey
+#
+# ========================
+# Discord: LeyKey#0001
+# Minecraft: LeyKeyy
+# YouTube: LeyKey
+# ========================
+#
+# {players} - Players in the game
+# {innocents} - Innocents in the game
+# {detec_status} - Status of the detective
+# {role} - The players' role
+# {map} - The map of the game
+# {status} - Status of the game (Waiting for players / Starting in)
+# {sec} - Time until the game starts
+# \n - Line break
+#
+# Prefix
+Prefix: §l§cMM§f:§r
+#
+# Speed of gold spawning (sec)
+GoldSpawnRate: 3
+#
+# Gold spawns
+GoldSpawns: 16
+#
+# Waiting status
+WaitingStatus: §cWaiting for more players...
+#
+# Starting status
+StartingStatus: Starting in {sec}s
+#
+# The scoreboard that gets displayed to players in the waiting lobby
+LobbyScoreboard: 
+- "§7§r"
+- "§fPlayers: §a{players}/16"
+- "§r"
+- "{status}"
+- "§r§7"
+- "§fMap: §a{map}"
+- "§b"
+- "§eplay.yourserver.net"
+#
+# The scoreboard that gets displayed to players during a game
+GameScoreboard:
+- "§7§r"
+- "§fRole: §a{role}"
+- "§r"
+- "§fInnocents left: §a{innocents}"
+- "§a§r"
+- "§fDetective: §a{detec_status}"
+- "§r§7"
+- "§fMap: §a{map}"
+- "§b"
+- "§eplay.yourserver.net"
+#
+# The scoreboard that gets displayed to players after a game
+RestartScoreboard:
+- "§7§r"
+- "§fRole: §aSpectator"
+- "§r"
+- "§fInnocents left: §a0"
+- "§a§r"
+- "§fDetective: §a{detec_status}"
+- "§r§7"
+- "§fMap: §a{map}"
+- "§b"
+- "§eplay.yourserver.net"
