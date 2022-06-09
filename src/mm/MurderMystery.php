@@ -44,7 +44,8 @@ class MurderMystery extends PluginBase implements Listener{
         $this->provider->loadGames();
 	    EntityFactory::getInstance()->register(SwordEntity::class, function(World $world, CompoundTag $nbt) : SwordEntity{
 		          return new SwordEntity(EntityDataHelper::parseLocation($nbt, $world), null, $nbt);
-	    }, ['SwordEntity']);       
+	    }, ['SwordEntity']);
+    }
 	    
     public function onCommand(CommandSender $sender, Command $cmd, string $str, array $args) : bool{
         if(strtolower($cmd) == "murdermystery"){
