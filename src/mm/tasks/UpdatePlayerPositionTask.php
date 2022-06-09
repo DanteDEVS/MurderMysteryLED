@@ -14,7 +14,7 @@ class UpdatePlayerPositionTask extends Task{
         $this->plugin = $plugin;
     }
 
-    public function onRun(){
+    public function onRun(): void{
         foreach($this->plugin->players as $player){
             if($player === $this->plugin->getMurderer()){
                 $closest = null;
