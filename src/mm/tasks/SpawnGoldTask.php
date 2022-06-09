@@ -9,12 +9,14 @@ use mm\game\Game;
 use mm\utils\Vector;
 
 class SpawnGoldTask extends Task{
+    
+    public $plugin;
 
     public function __construct(Game $plugin){
         $this->plugin = $plugin;
     }
 
-    public function onRun(int $ct){
+    public function onRun(){
         switch($this->plugin->phase){
             case Game::PHASE_GAME:
                 $spawns = (int) $this->plugin->plugin->getConfig()->get("GoldSpawns");
