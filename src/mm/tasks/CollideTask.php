@@ -7,13 +7,16 @@ use mm\game\Game;
 use mm\utils\SwordEntity;
 
 class CollideTask extends Task{
+    
+    public $plugin;
+    public $sword;
 
     public function __construct(Game $plugin, SwordEntity $sword){
         $this->plugin = $plugin;
         $this->sword = $sword;
     }
 
-    public function onRun(int $ct){
+    public function onRun(){
         if(!$this->sword->isClosed()){
             foreach($this->plugin->players as $player){
                 if($this->sword->getPosition()->asVector3()->distance($player) < 2){
