@@ -13,7 +13,7 @@ class ArrowTask extends Task{
         $this->plugin = $plugin;
     }
 
-    public function onRun(){
+    public function onRun(): void{
         $this->plugin->giveArrow();
     }
 }
