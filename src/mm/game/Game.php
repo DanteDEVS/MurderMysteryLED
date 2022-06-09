@@ -23,7 +23,7 @@ use pocketmine\event\player\{
 };
 use pocketmine\event\inventory\InventoryPickupItemEvent;
 use pocketmine\world\{
-    Level,
+    World,
     Position
 };
 use pocketmine\player\Player;
@@ -246,11 +246,9 @@ class Game implements Listener{
 
         $lobby = \pocketmine\item\ItemFactory::getInstance()->get(355, 14, 1);
         $lobby->setCustomName("§r§l§cBack to lobby§r");
-		$lobby->setNamedTagEntry(new StringTag("MurderMystery", "lobby"));
 
         $start = \pocketmine\item\ItemFactory::getInstance()->get(76, 0, 1);
         $start->setCustomName("§r§l§bStart Game§r");
-		$start->setNamedTagEntry(new StringTag("MurderMystery", "start"));
 
         $inv->setItem(8, $lobby);
         if($player->hasPermission("murdermystery.forcestart")){
@@ -265,11 +263,9 @@ class Game implements Listener{
 
         $lobby = \pocketmine\item\ItemFactory::getInstance()->get(355, 14, 1);
         $lobby->setCustomName("§r§l§cBack to lobby§r");
-		$lobby->setNamedTagEntry(new StringTag("MurderMystery", "lobby"));
 
         $tp = \pocketmine\item\ItemFactory::getInstance()->get(345, 14, 1);
         $tp->setCustomName("§r§l§aTeleporter§r");
-		$tp->setNamedTagEntry(new StringTag("MurderMystery", "tp"));
 
         $inv->setItem(8, $lobby);
         $inv->setItem(0, $tp);
@@ -280,10 +276,10 @@ class Game implements Listener{
         $player->getInventory()->clearAll();
         $player->getArmorInventory()->clearAll();
         $player->getCursorInventory()->clearAll();
-        $player->getEffects()->all()->clear();
+        $player->getEffects()->clear();
         $player->getHungerManager()->setFood(20);
         $player->setHealth(20);
-        $player->setGamemode(2);
+        $player->setGamemode(GameMode::ADVENTURE());
         $this->getCoreItems($player);
         $player->setFlying(false);
         $player->setAllowFlight(false);
@@ -296,10 +292,10 @@ class Game implements Listener{
         $player->getInventory()->clearAll();
         $player->getArmorInventory()->clearAll();
         $player->getCursorInventory()->clearAll();
-        $player->getEffects()->all()->clear();
+        $player->getEffects()->clear();
         $player->getHungerManager()->setFood(20);
         $player->setHealth(20);
-        $player->setGamemode(0);
+        $player->setGamemode(GameMode::SURVIVAL());
         $player->setFlying(false);
         $player->setAllowFlight(false);
         unset($this->changeInv[$player->getName()]);
@@ -502,45 +498,6 @@ class Game implements Listener{
             }
         }
 
-        if(
-            $event->getAction() == PlayerInteractEvent::RIGHT_CLICK_AIR or
-            $event->getAction() == PlayerInteractEvent::RIGHT_CLICK_BLOCK or
-            $event->getAction() == PlayerInteractEvent::LEFT_CLICK_BLOCK
-        ){
-            if($item->getNamedTag()->hasTag("MurderMystery")){
-                $string = $item->getNamedTag()->getString("MurderMystery");
-                if(isset($this->interactDelay[$player->getName()])){
-                    if(microtime(true) >= $this->interactDelay[$player->getName()]){
-                        unset($this->interactDelay[$player->getName()]);
-                    } else {
-                        return;
-                    }
-                }
-                if($string == "start"){
-                    $this->interactDelay[$player->getName()] = microtime(true) + 0.5;
-                    if(count($this->players) > 1){
-                        $this->task->startTime = 10;
-                        $this->setItem(0, 4, $player);
-                    } else {
-                        $player->sendMessage("§cThere aren't enough players to start a game!");
-                    }
-                }
-
-                if($string == "lobby"){
-                    $this->interactDelay[$player->getName()] = microtime(true) + 0.5;
-                    $this->removeFromGame($player);
-                }
-
-                if($string == "tp"){
-                    if($this->phase == 1){
-                        $this->interactDelay[$player->getName()] = microtime(true) + 0.5;
-                        $this->openTeleporter($player);
-                    }
-                }
-                return;
-            }
-        }
-
         if($level == null){
             return;
         }
@@ -569,8 +526,7 @@ class Game implements Listener{
     }
 
     public function openTeleporter($player){
-        $api = $this->plugin->getServer()->getPluginManager()->getPlugin("FormAPI");
-        $form = $api->createSimpleForm(function (Player $player, $data = null){
+        $form = new SimpleForm(function(Player $player, $data = null){
             if($data === null){
                 return true;
             }
@@ -774,12 +730,12 @@ class Game implements Listener{
 
     public function setSpawnPositionPacket(Player $player, Vector3 $pos){
         $pk = new SetSpawnPositionPacket();
-        $pk->x = $pos->getFloorX();
-        $pk->y = $pos->getFloorY();
-        $pk->z = $pos->getFloorZ();
-        $pk->x2 = $pos->getFloorX();
-        $pk->y2 = $pos->getFloorY();
-        $pk->z2 = $pos->getFloorZ();
+        $x = $pos->getFloorX();
+        $y = $pos->getFloorY();
+        $z = $pos->getFloorZ();
+        $x2 = $pos->getFloorX();
+        $y2 = $pos->getFloorY();
+        $z2 = $pos->getFloorZ();
         $pk->dimension = DimensionIds::OVERWORLD;
         $pk->spawnType = SetSpawnPositionPacket::TYPE_WORLD_SPAWN;
         $player->getNetworkSession()->sendDataPacket($pk);
@@ -901,7 +857,7 @@ class Game implements Listener{
     }
 
     public function createSwordEntity(Player $player){
-        $nbt = Entity::createBaseNBT(
+        $nbt = NBTEntity::createBaseNBT(
             $player->getTargetBlock(1),
             $player->getDirectionVector(),
             $player->yaw - 75,
