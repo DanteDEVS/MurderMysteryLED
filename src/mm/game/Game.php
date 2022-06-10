@@ -683,7 +683,7 @@ class Game implements Listener{
             $this->getSpectatorCore($player);
             unset($this->changeInv[$player->getName()]);
             $player->getEffects()->all()->clear();
-            $player->setGamemode(GameMode::SPECTATOR);
+            $player->setGamemode(GameMode::SPECTATOR());
 
             foreach($this->players as $ingame){
                 $this->playSound($ingame, "game.player.die");
