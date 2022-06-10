@@ -27,6 +27,7 @@ use pocketmine\world\{
     Position
 };
 use pocketmine\player\Player;
+use pocketmine\player\GameMode;
 use pocketmine\block\tile\Tile;
 use pocketmine\entity\projectile\Arrow;
 use pocketmine\entity\Creature;
@@ -45,6 +46,8 @@ use mm\MurderMystery;
 use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use mm\utils\{Vector, SwordEntity};
 use mm\tasks\{ArrowTask, CollideTask, CooldownTask, DespawnSwordEntity, SpawnGoldTask, UpdatePlayerPositionTask};
+
+use Vecnavium\FormsUI\SimpleForm;
 
 class Game implements Listener{
 
@@ -680,7 +683,7 @@ class Game implements Listener{
             $this->getSpectatorCore($player);
             unset($this->changeInv[$player->getName()]);
             $player->getEffects()->all()->clear();
-            $player->setGamemode(3);
+            $player->setGamemode(GameMode::SPECTATOR);
 
             foreach($this->players as $ingame){
                 $this->playSound($ingame, "game.player.die");
