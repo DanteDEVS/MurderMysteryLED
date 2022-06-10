@@ -26,7 +26,7 @@ class GameTask extends Task{
         $this->plugin = $plugin;
     }
 
-    public function onRun(){
+    public function onRun(): void{
         $this->reloadSign();
 
         if($this->plugin->setup) return;
