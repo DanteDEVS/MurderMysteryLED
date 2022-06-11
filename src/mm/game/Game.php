@@ -5,8 +5,9 @@ namespace mm\game;
 use pocketmine\event\Listener;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
+
 use pocketmine\event\entity\{
-    EntityLevelChangeEvent,
+    EntityTeleportEvent,
     EntityDamageEvent,
     ProjectileHitBlockEvent,
     EntityDamageByEntityEvent,
@@ -14,6 +15,7 @@ use pocketmine\event\entity\{
     ProjectileLaunchEvent,
     EntityInventoryChangeEvent
 };
+
 use pocketmine\event\player\{
     PlayerInteractEvent,
     PlayerQuitEvent,
@@ -528,7 +530,7 @@ class Game implements Listener{
         $this->joinLobby($player);
     }
 
-    public function openTeleporter($player){
+    public function openTeleporter(Player $player){
         $form = new SimpleForm(function(Player $player, $data = null){
             if($data === null){
                 return true;
@@ -572,7 +574,7 @@ class Game implements Listener{
         $this->removeScoreboard($player);
     }
 
-    public function onLevelChange(EntityWorldChangeEvent $event){
+    public function onLevelChange(EntityTeleportEvent $event){
         $player = $event->getEntity();
         if($player instanceof Player){
             if($this->isPlaying($player)){
@@ -683,7 +685,7 @@ class Game implements Listener{
             $this->getSpectatorCore($player);
             unset($this->changeInv[$player->getName()]);
             $player->getEffects()->all()->clear();
-            $player->setGamemode(GameMode::SPECTATOR);
+            $player->setGamemode(GameMode::SPECTATOR());
 
             foreach($this->players as $ingame){
                 $this->playSound($ingame, "game.player.die");
