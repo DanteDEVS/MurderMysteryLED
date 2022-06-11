@@ -1,3 +1,4 @@
+<a align="center"><img src="https://raw.githubusercontent.com/DanteDEVS/MurderMysteryLED/main/logo.png"></img></a>
 # MurderMysteryLED
 MurderMystery PM3 to PM4
 # Issues or suggestions
