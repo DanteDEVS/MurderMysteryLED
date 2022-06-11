@@ -50,6 +50,7 @@ use pocketmine\network\mcpe\protocol\types\ScorePacketEntry;
 use mm\MurderMystery;
 use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use mm\utils\{Vector, SwordEntity};
+use pocketmine\entity\Location;
 use mm\tasks\{ArrowTask, CollideTask, CooldownTask, DespawnSwordEntity, SpawnGoldTask, UpdatePlayerPositionTask};
 
 use Vecnavium\FormsUI\SimpleForm;
@@ -868,12 +869,12 @@ class Game implements Listener{
         }
     }
 
-    public function createSwordEntity(Player $player){
+    public function createSwordEntity(Player $player, Location $location){
         $nbt = NBTEntity::createBaseNBT(
             $player->getTargetBlock(1),
             $player->getDirectionVector(),
-            $player->yaw - 75,
-            $player->pitch
+            $location->yaw - 75,
+            $location->pitch
         );
         
         $sword = new SwordEntity($player->getWorld(), $nbt);
@@ -904,7 +905,7 @@ class Game implements Listener{
             $this->task->reloadTimer();
         }
 
-        if(!$this->map instanceof Level){
+        if(!$this->map instanceof World){
             $this->map = $this->plugin->getServer()->getWorldManager()->getWorldByName($this->data["map"]);
         }
 
