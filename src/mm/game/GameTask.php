@@ -20,14 +20,15 @@ class GameTask extends Task{
     public $startTime = 31;
     public $gameTime = 5 * 60;
     public $restartTime = 5;
-    public $phase;
 
     public $restartData = [];
-    public $players = [];
-    public $map;
-    
-    public $setup;
 
+    public $phase = 0;
+    
+    public $map = null;
+
+    public $players = [];
+    
     public function __construct(Game $plugin){
         $this->plugin = $plugin;
     }
