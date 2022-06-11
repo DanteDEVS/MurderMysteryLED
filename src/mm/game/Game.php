@@ -23,7 +23,7 @@ use pocketmine\event\player\{
     PlayerChatEvent,
     PlayerDropItemEvent
 };
-use pocketmine\event\inventory\InventoryPickupItemEvent;
+use pocketmine\event\inventory\InventoryTransactionEvent;
 use pocketmine\world\{
     World,
     Position
@@ -753,7 +753,7 @@ class Game implements Listener{
         }
     }
 
-    public function onPickup(InventoryPickupItemEvent $event){
+    public function onPickup(InventoryTransactionEvent $event){
         $player = $event->getInventory()->getHolder();
         $item = $event->getItem()->getItem()->getId();
         $inv = $player->getInventory();
