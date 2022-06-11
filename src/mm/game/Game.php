@@ -5,6 +5,8 @@ namespace mm\game;
 use pocketmine\event\Listener;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
+use pocketmine\item\ItemFactory;
+use pocketmine\item\ItemIds;
 
 use pocketmine\event\entity\{
     EntityTeleportEvent,
@@ -76,6 +78,7 @@ class Game implements Listener{
     public $murderer;
     public $detective;
     public $deadMurderer;
+    public $arrow;
 
     public function __construct(MurderMystery $plugin, array $file){
         $this->plugin = $plugin;
@@ -468,7 +471,7 @@ class Game implements Listener{
         $this->phase = self::PHASE_RESTART;
 
         foreach($this->map->getEntities() as $entity){
-            if(!$entity instanceof Creature && !$entity instanceof Arrow){
+            if(!$entity instanceof SwordEntity && !$entity instanceof Arrow){
                 $entity->close();
             }
         }
@@ -532,6 +535,7 @@ class Game implements Listener{
 
     public function openTeleporter(Player $player){
         $form = new SimpleForm(function(Player $player, $data = null){
+            $players = [];		
             if($data === null){
                 return true;
             }
@@ -633,13 +637,13 @@ class Game implements Listener{
     }
 
     public function onDamage(EntityDamageEvent $event){
-        $player = $event->getEntity();
+        $player = $event->getEntity();	    
         if($player instanceof Player){
             if($this->isPlaying($player)){
                 if($event instanceof EntityDamageByEntityEvent){
                     $murderer = $event->getDamager();
                     if($murderer === $this->getMurderer()){
-                        if($murderer->getInventory()->getItemInHand()->getId() == \pocketmine\item\ItemIds::IRON_SWORD){
+                        if($murderer instanceof Player && $murderer->getInventory()->getItemInHand()->getId() == \pocketmine\item\ItemIds::IRON_SWORD){
                             $this->killPlayer($player);
                         }
                     }
@@ -754,8 +758,11 @@ class Game implements Listener{
     }
 
     public function onPickup(InventoryTransactionEvent $event){
-        $player = $event->getInventory()->getHolder();
-        $item = $event->getItem()->getItem()->getId();
+        $player = $event->getOrigin();
+        $item = $event->getItem()->getId();
+
+        if(!$player instanceof Player) return;
+	    
         $inv = $player->getInventory();
 
         if($this->isPlaying($player)){
@@ -796,7 +803,6 @@ class Game implements Listener{
     }
 
     public function onInvChange(EntityInventoryChangeEvent $event){
-        $player = $event->getEntity();
         if($player instanceof Player){
             if($this->isPlaying($player)){
                 if($this->phase == self::PHASE_GAME){
