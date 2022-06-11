@@ -485,7 +485,7 @@ class Game implements Listener{
         return isset($this->players[$player->getName()]);
     }
 
-    public function onInteract(PlayerInteractEvent $event){
+    public function onInteract(PlayerInteractEvent $event, Location $location){
         $player = $event->getPlayer();
         $block = $event->getBlock();
         $level = $player->getWorld();
@@ -502,7 +502,7 @@ class Game implements Listener{
             if($event->getItem()->getId() == \pocketmine\item\ItemIds::IRON_SWORD){
                 if(!isset($this->cooldown[$player->getName()])){
                     if($this->phase == 1){
-                        $this->createSwordEntity($player);
+                        $this->createSwordEntity($player, $location);
                     }
                 }
             }
