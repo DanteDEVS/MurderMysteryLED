@@ -15,7 +15,8 @@ use pocketmine\event\entity\{
     EntityDamageByEntityEvent,
     EntityDamageByChildEntityEvent,
     ProjectileLaunchEvent,
-    EntityInventoryChangeEvent
+    EntityInventoryChangeEvent,
+    EntityItemPickupEvent
 };
 
 use pocketmine\event\player\{
@@ -757,7 +758,7 @@ class Game implements Listener{
         }
     }
 
-    public function onPickup(InventoryTransactionEvent $event){
+    public function onPickup(EntityItemPickupEvent $event){
         $player = $event->getOrigin();
         $item = $event->getItem()->getId();
 
@@ -802,7 +803,7 @@ class Game implements Listener{
         }
     }
 
-    public function onInvChange(EntityInventoryChangeEvent $event){
+    public function onInvChange(Player $player, InventoryTransactionEvent $event){
         if($player instanceof Player){
             if($this->isPlaying($player)){
                 if($this->phase == self::PHASE_GAME){
