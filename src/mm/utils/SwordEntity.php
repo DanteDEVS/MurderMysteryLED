@@ -13,6 +13,9 @@ use pocketmine\item\ItemIds;
 use pocketmine\entity\projectile\Throwable;
 
 class SwordEntity extends Throwable{
+	
+   public $networkProperties;
+
    public static function getNetworkTypeId() : string{ return EntityIds::ARMOR_STAND; }
     
    protected function getInitialSizeInfo() : EntitySizeInfo{ return new EntitySizeInfo(1.5, 1.5); }	
