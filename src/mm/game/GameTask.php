@@ -237,12 +237,6 @@ class GameTask extends Task{
         }
     }
 
-    public function reloadTimer(){
-        $this->startTime = 31;
-        $this->gameTime = 5 * 60;
-        $this->restartTime = 5;
-    }
-    
     public function addSound($player, string $sound = '', float $pitch = 1){
         $pk = new PlaySoundPacket();
         $pk->x = $player->getPosition()->getX();
@@ -252,5 +246,11 @@ class GameTask extends Task{
         $pk->pitch = $pitch;
         $pk->soundName = $sound;
         $player->getNetworkSession()->sendDataPacket($pk);
+    }
+
+    public function reloadTimer(){
+        $this->startTime = 31;
+        $this->gameTime = 5 * 60;
+        $this->restartTime = 5;
     }
 }
