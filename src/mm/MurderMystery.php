@@ -184,7 +184,7 @@ class MurderMystery extends PluginBase implements Listener{
 			    
 		case "quit":
 		    if($sender->hasPermission("murdermystery.noop")){
-		       $sender->sendMessage($this->noPerms);
+			    
 		    }
                     if(!$sender instanceof Player){
                         $sender->sendMessage("§cUse this command in-game!");
@@ -196,7 +196,7 @@ class MurderMystery extends PluginBase implements Listener{
 			    
                 case "join":
 		    if($sender->hasPermission("murdermystery.noop")){
-		       $sender->sendMessage($this->noPerms);
+			    
 		    }
                     if(!$sender instanceof Player){
                         $sender->sendMessage("§cUse this command in-game!");
