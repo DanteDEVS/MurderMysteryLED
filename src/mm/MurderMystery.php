@@ -56,7 +56,7 @@ class MurderMystery extends PluginBase implements Listener{
             switch($args[0]){
                 case "help":
                     $sender->sendMessage("§b/murdermystery help§f: §7Shows a list of available commands");
-                    if($sender->hasPermission("murdermystery.edit")){
+                    if($sender->hasPermission("murdermystery.op")){
                         $sender->sendMessage("§b/murdermystery create <name>§f: §7Create a new game of murder mystery");
                         $sender->sendMessage("§b/murdermystery remove <name>§f: §7Remove a game of murder mystery");
                         $sender->sendMessage("§b/murdermystery edit <name>§f: §7Edit a game of murder mystery");
@@ -67,7 +67,7 @@ class MurderMystery extends PluginBase implements Listener{
                 break;
 
                 case "create":
-                    if(!$sender->hasPermission("murdermystery.edit")){
+                    if(!$sender->hasPermission("murdermystery.op")){
                         $sender->sendMessage($this->noPerms);
                         break;
                     }
@@ -87,7 +87,7 @@ class MurderMystery extends PluginBase implements Listener{
                 break;
 
                 case "remove":
-                    if(!$sender->hasPermission("murdermystery.edit")){
+                    if(!$sender->hasPermission("murdermystery.op")){
                         $sender->sendMessage($this->noPerms);
                         break;
                     }
@@ -118,7 +118,7 @@ class MurderMystery extends PluginBase implements Listener{
                 break;
 
                 case "edit":
-                    if(!$sender->hasPermission("murdermystery.edit")){
+                    if(!$sender->hasPermission("murdermystery.op")){
                         $sender->sendMessage($this->noPerms);
                         break;
                     }
@@ -149,7 +149,7 @@ class MurderMystery extends PluginBase implements Listener{
                 break;
 
                 case "list":
-                    if(!$sender->hasPermission("murdermystery.edit")){
+                    if(!$sender->hasPermission("murdermystery.op")){
                         $sender->sendMessage($this->noPerms);
                         break;
                     }
@@ -172,11 +172,31 @@ class MurderMystery extends PluginBase implements Listener{
                 break;
 
                 case "savegames":
+	            if(!$sender->hasPermission("murdermystery.op")){
+                        $sender->sendMessage($this->noPerms);
+                        break;
+                    }
+			    
                     $this->provider->saveGames();
                     $sender->sendMessage($this->prefix . "§7All games have been saved!");
                 break;
-
+			    
+		case "quit":
+		    if($sender->hasPermission("murdermystery.noop")){
+		       $sender->sendMessage($this->noPerms);
+		    }
+                    if(!$sender instanceof Player){
+                        $sender->sendMessage("§cUse this command in-game!");
+                        break;
+                    }
+			    
+		    $sender->sendMessage("This is Comming Soon pls try again soon!");
+                break;
+			    
                 case "join":
+		    if($sender->hasPermission("murdermystery.noop")){
+		       $sender->sendMessage($this->noPerms);
+		    }
                     if(!$sender instanceof Player){
                         $sender->sendMessage("§cUse this command in-game!");
                         break;
@@ -192,6 +212,7 @@ class MurderMystery extends PluginBase implements Listener{
         }
         return true;
     }
+	
 
     public function onChat(PlayerChatEvent $event){
         $player = $event->getPlayer();
