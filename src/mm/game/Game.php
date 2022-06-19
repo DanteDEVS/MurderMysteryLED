@@ -357,6 +357,13 @@ class Game implements Listener{
         foreach($this->players as $player){
             $innocents[$player->getName()] = $player;
         }
+	    
+	if(empty($innocents)) {
+            foreach($this->players as $player) {
+                $innocents[$player->getName()] = $player;
+            }
+        }	   
+	    
         $murderer = $innocents[array_rand($innocents)];
         $this->murderer = $murderer;
         unset($innocents[$murderer->getName()]);
