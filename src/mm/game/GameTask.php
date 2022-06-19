@@ -78,6 +78,7 @@ class GameTask extends Task{
                         foreach($this->plugin->players as $player){                        
                                 $this->plugin->startGame();
                                 $this->addSound($player, "random.levelup", 0.5);
+                                $player->sendTitle("§a§lGAME STARTED!");                           
                         }
                     }
                     $this->startTime--;
