@@ -6,7 +6,7 @@ use pocketmine\world\{
     World,
     Position
 };
-use pocketmine\world\sound\{BlazeShootSound, ClickSound, PopSound};
+use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use pocketmine\scheduler\Task;
 use pocketmine\block\tile\Sign;
 use pocketmine\player\GameMode;
@@ -60,23 +60,23 @@ class GameTask extends Task{
                                 $player->sendMessage("§eThe game starts in §6" . $this->startTime . "§e seconds!");
                                 $player->sendTitle("§a10");
                                 $this->plugin->setItem(0, 4, $player);
-                                $this->plugin->map->addSound(new PopSound($player->getPosition()->asVector3()));
+                                $this->addSound($player, "note.hat");
                             }
                         break;
                     }
 
                     if($this->startTime < 6 && $this->startTime > 0){
                         foreach($this->plugin->players as $player){
-                            $this->plugin->map->addSound(new ClickSound($player->getPosition()->asVector3()));
+                            $this->addSound($player, "note.hat");
                             $player->sendMessage("§eThe game starts in §c" . $this->startTime . "§e seconds!");
                             $player->sendTitle("§c" . $this->startTime);
                         }
                     }
 
                     if($this->startTime == 0){
-                        $this->plugin->startGame();
-                        foreach($this->plugin->players as $player){
-                            $this->plugin->map->addSound(new BlazeShootSound());
+                        foreach($this->plugin->players as $player){                        
+                                $this->plugin->startGame();
+                                $this->addSound($player, "random.levelup", 0.5);
                         }
                     }
                     $this->startTime--;
@@ -89,7 +89,7 @@ class GameTask extends Task{
                 if($this->gameTime > 285 && $this->gameTime < 291){
                     foreach($this->plugin->players as $player){
                         $player->sendMessage("§eThe Murderer gets their sword in §c" . ($this->gameTime - 285) . "§e seconds");
-                        $this->plugin->map->addSound(new ClickSound($player->getPosition()->asVector3()));
+                        $this->addSound($player, "note.hat");
                     }
                 }
                 switch($this->gameTime){
@@ -200,10 +200,11 @@ class GameTask extends Task{
         if($signPos->getWorld()->getTile($signPos) === null){
             return;
         }
-
-        if($this->plugin->setup){
+        
+        if($this->plugin->setup){   
+            /** @var Sign $sign */            
             $sign = $signPos->getWorld()->getTile($signPos);
-            $sign->setText($signText[0]);
+            $sign->setText(new SignText([$signText[0], $signText[1], $signText[2], $signText[3]]));
             return;
         }
 
@@ -230,9 +231,8 @@ class GameTask extends Task{
                 $signText[3] = "";
             break;
         }
-
-        $sign = $signPos->getWorld()->getTile($signPos);
-        if($sign instanceof Sign){
+            /** @var Sign $sign */
+            $sign = $signPos->getWorld()->getTile($signPos);
             $sign->setText($signText[0]);
         }
     }
@@ -241,5 +241,16 @@ class GameTask extends Task{
         $this->startTime = 31;
         $this->gameTime = 5 * 60;
         $this->restartTime = 5;
+    }
+    
+    public function addSound($player, string $sound = '', float $pitch = 1){
+        $pk = new PlaySoundPacket();
+        $pk->x = $player->getPosition()->getX();
+        $pk->y = $player->getPosition()->getY();
+        $pk->z = $player->getPosition()->getZ();
+        $pk->volume = 4;
+        $pk->pitch = $pitch;
+        $pk->soundName = $sound;
+        $player->getNetworkSession()->sendDataPacket($pk);
     }
 }
