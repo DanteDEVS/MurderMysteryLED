@@ -11,6 +11,9 @@ commands:
     permission: "murdermystery.edit"
     
 permissions:
-  murdermystery.edit:
+  murdermystery.op:
     description: "Permission to all Setup Commands!"
     default: op
+  murdermystery.noop:
+    description: "Permission to all Non Op Commands!"
+    default: true
