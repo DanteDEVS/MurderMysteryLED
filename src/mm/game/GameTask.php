@@ -9,6 +9,7 @@ use pocketmine\world\{
 use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use pocketmine\scheduler\Task;
 use pocketmine\block\tile\Sign;
+use pocketmine\block\utils\SignText;
 use pocketmine\player\GameMode;
 
 use mm\utils\Vector;
@@ -233,8 +234,7 @@ class GameTask extends Task{
         }
             /** @var Sign $sign */
             $sign = $signPos->getWorld()->getTile($signPos);
-            $sign->setText($signText[0]);
-        }
+            $sign->setText(new SignText([$signText[0], $signText[1], $signText[2], $signText[3]]));
     }
 
     public function addSound($player, string $sound = '', float $pitch = 1){
