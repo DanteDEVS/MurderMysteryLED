@@ -64,6 +64,7 @@ class MurderMystery extends PluginBase implements Listener{
                         $sender->sendMessage("§b/murdermystery savegames§f: §7Save all murder mystery games");
                     }
                     $sender->sendMessage("§b/murdermystery join§f: §7Join an available game of murder mystery");
+                    $sender->sendMessage("§b/murdermystery quit§f: §cThis is comming soon!");
                 break;
 
                 case "create":
