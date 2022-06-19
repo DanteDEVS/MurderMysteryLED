@@ -8,7 +8,7 @@ commands:
   murdermystery:
     description: "Murder Mystery command"
     aliases: [mm, mrd]
-    permission: "murdermystery.edit"
+    permission: "murdermystery.noop"
     
 permissions:
   murdermystery.op:
