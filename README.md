@@ -5,6 +5,24 @@ MurderMystery PM3 to PM4
 - **NEEDS TO BE TESTED**
 
 I am not sure yet if the plugin is ready!
+# The Basics Todo-List
+- [X] Scoreboard
+- [ ] BossBar 
+- [X] The Basics of MurderMystery
+- [X] Commands & Permissions
+# Entity Todo-List
+- [X] Throwable-Sword
+- [ ] Dead Body Entity
+# Commands Todo-List
+- [X] Join Command (the join command is also basically the random cmd)
+- [ ] Quit Command 
+- [X] SetUp Command (/murdermystery edit)
+- [X] Create Command
+- [X] Delete Arenas Command
+- [X] List of Arenas Command 
+} else { // permissions
+- [X] Op Permission (permission to all commands (including the setup commands))
+- [X] NoOp Permission (permission to all commands (not including setup commands))
 # Issues or suggestions
 Pls report issues at The issues tab in github, you can also suggest a suggestion at the issues tab
 # Pull Request
