@@ -12,6 +12,7 @@ use pocketmine\block\tile\Sign;
 use pocketmine\block\utils\SignText;
 use pocketmine\player\GameMode;
 
+use mm\scoreboards\ScoreBoards;
 use mm\utils\Vector;
 
 class GameTask extends Task{
@@ -39,14 +40,28 @@ class GameTask extends Task{
 
         if($this->plugin->setup) return;
 
-        $this->plugin->scoreboard();
         switch($this->plugin->phase){
             case Game::PHASE_LOBBY:
-                if(count($this->plugin->players) >= 2){
+                if(count($this->plugin->players) >= 3){
                     switch($this->startTime){
                         case 30:
                             foreach($this->plugin->players as $player){
-                                $player->sendMessage("§eThe game starts in " . $this->startTime . " seconds!");
+                                  if ($player instanceof Player) {
+                                      $time = $this->startTime;
+                                      $map = $this->plugin->map->getFolderName();
+                                      $api = Scoreboards::getInstance();
+                                      $api->new($player, "ObjectiveName", "§l§eMurderMystery");
+                                      $api->setLine($player, 1, "§7" . date("d/m/Y"));
+                                      $api->setLine($player, 2, "  ");
+                                      $api->setLine($player, 3, "§fPlayers: §a". count($this->plugin->players) . "/16");
+                                      $api->setLine($player, 4, "   ");
+                                      $api->setLine($player, 5, "§fStarting in: §a" . $time);
+                                      $api->setLine($player, 6, "      ");
+                                      $api->setLine($player, 7, "§fMap: " . $map);
+                                      $api->setLine($player, 8, "          ");
+                                      $api->setLine($player, 9, "§ewww.servername.com");                               
+                                      $player->sendMessage("§eThe game starts in " . $this->startTime . " seconds!");
+                                  }
                             }
                         break;
 
