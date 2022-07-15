@@ -11,6 +11,7 @@ use pocketmine\scheduler\Task;
 use pocketmine\block\tile\Sign;
 use pocketmine\block\utils\SignText;
 use pocketmine\player\GameMode;
+use pocketmine\player\Player;
 
 use mm\utils\Vector;
 
@@ -238,7 +239,7 @@ class GameTask extends Task{
             $sign->setText(new SignText([$signText[0], $signText[1], $signText[2], $signText[3]]));
     }
 
-    public function addSound($player, string $sound = '', float $pitch = 1){
+    public function addSound(Player $player, string $sound = '', float $pitch = 1){
         $pk = new PlaySoundPacket();
         $pk->x = $player->getPosition()->getX();
         $pk->y = $player->getPosition()->getY();
