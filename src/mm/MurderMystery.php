@@ -42,9 +42,9 @@ class MurderMystery extends PluginBase implements Listener{
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->provider->loadGames();
-	    EntityFactory::getInstance()->register(SwordEntity::class, function(World $world, CompoundTag $nbt) : SwordEntity{
-		          return new SwordEntity(EntityDataHelper::parseLocation($nbt, $world), null, $nbt);
-	    }, ['SwordEntity']);
+	EntityFactory::getInstance()->register(SwordEntity::class, function(World $world, CompoundTag $nbt) : SwordEntity{
+	    return new SwordEntity(EntityDataHelper::parseLocation($nbt, $world), $nbt);
+	}, ['SwordEntity']);
     }
 	    
     public function onCommand(CommandSender $sender, Command $cmd, string $str, array $args) : bool{
