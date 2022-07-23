@@ -6,6 +6,7 @@ use pocketmine\world\{
     World,
     Position
 };
+use pocketmine\world\sound\{BlazeShootSound, ClickSound, PopSound};
 use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use pocketmine\scheduler\Task;
 use pocketmine\block\tile\Sign;
