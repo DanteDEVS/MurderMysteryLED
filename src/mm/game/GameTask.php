@@ -75,10 +75,11 @@ class GameTask extends Task{
                     }
 
                     if($this->startTime == 0){
-                        foreach($this->plugin->players as $player){                        
-                                $this->plugin->startGame();
-                                $this->addSound($player, "random.levelup", 0.5);
-                                $player->sendTitle("§a§lGAME STARTED!");                           
+                        $this->plugin->phase = Game::PHASE_GAME;
+                        $this->plugin->startGame();
+                        foreach($this->plugin->players as $player){
+                            $this->plugin->giveRoles($player);                            
+                            $player->getWorld()->addSound($player->getPosition(), new BlazeShootSound());
                         }
                     }
                     $this->startTime--;
