@@ -744,12 +744,12 @@ class Game implements Listener{
 
     public function setSpawnPositionPacket(Player $player, Vector3 $pos){
         $pk = new SpawnPositionPacket();
-        $this->x = $pos->getFloorX();
-        $this->z = $pos->getFloorY();
-        $this->y = $pos->getFloorZ();
-        $this->x2 = $pos->getFloorX();
-        $this->y2 = $pos->getFloorY();
-        $this->z2 = $pos->getFloorZ();
+        $pk->x = $pos->getFloorX();
+        $pk->z = $pos->getFloorY();
+        $pk->y = $pos->getFloorZ();
+        $pk->x2 = $pos->getFloorX();
+        $pk->y2 = $pos->getFloorY();
+        $pk->z2 = $pos->getFloorZ();
         $pk->dimension = DimensionIds::OVERWORLD;
         $pk->spawnType = SpawnPositionPacket::TYPE_WORLD_SPAWN;
         $player->getNetworkSession()->sendDataPacket($pk);
