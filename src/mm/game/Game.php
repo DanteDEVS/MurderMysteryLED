@@ -505,7 +505,7 @@ class Game implements Listener{
             if($event->getItem()->getId() == \pocketmine\item\ItemIds::IRON_SWORD){
                 if(!isset($this->cooldown[$player->getName()])){
                     if($this->phase == 1){
-                        $this->createSwordEntity($player, $location);
+                        $this->createSwordEntity($player);
                     }
                 }
             }
@@ -872,12 +872,12 @@ class Game implements Listener{
         }
     }
 
-    public function createSwordEntity(Player $player, Location $location){
+    public function createSwordEntity(Player $player){
         $nbt = NBTEntity::createBaseNBT(
             $player->getTargetBlock(1),
             $player->getDirectionVector(),
-            $location->yaw - 75,
-            $location->pitch
+            $player->getLocation()->getYaw() - 75,
+            $location->getLocation()->getPitch()
         );
         
         $sword = new SwordEntity($player->getWorld(), $nbt);
