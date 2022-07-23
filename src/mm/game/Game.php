@@ -877,7 +877,7 @@ class Game implements Listener{
             $player->getTargetBlock(1),
             $player->getDirectionVector(),
             $player->getLocation()->getYaw() - 75,
-            $location->getLocation()->getPitch()
+            $player->getLocation()->getPitch()
         );
         
         $sword = new SwordEntity($player->getWorld(), $nbt);
