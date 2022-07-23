@@ -49,7 +49,7 @@ use pocketmine\network\mcpe\protocol\types\ScorePacketEntry;
 
 use mm\MurderMystery;
 use pocketmine\network\mcpe\protocol\PlaySoundPacket;
-use mm\utils\{Vector, SwordEntity};
+use mm\utils\{Vector, SwordEntity, SpawnPositionPacket};
 use pocketmine\entity\Location;
 use mm\tasks\{ArrowTask, CollideTask, CooldownTask, DespawnSwordEntity, SpawnGoldTask, UpdatePlayerPositionTask};
 
@@ -345,11 +345,7 @@ class Game implements Listener{
             $player->getArmorInventory()->clearAll();
             $player->getCursorInventory()->clearAll();
             unset($this->changeInv[$player->getName()]);
-        }
-
-        $this->phase = 1;
-
-        $this->giveRoles();
+	}
     }
 
     public function giveRoles(){
@@ -747,17 +743,17 @@ class Game implements Listener{
     }
 
     public function setSpawnPositionPacket(Player $player, Vector3 $pos){
-        $pk = new SetSpawnPositionPacket();
-        $x = $pos->getFloorX();
-        $y = $pos->getFloorY();
-        $z = $pos->getFloorZ();
-        $x2 = $pos->getFloorX();
-        $y2 = $pos->getFloorY();
-        $z2 = $pos->getFloorZ();
+        $pk = new SpawnPositionPacket();
+        $this->x = $pos->getFloorX();
+        $this->z = $pos->getFloorY();
+        $this->y = $pos->getFloorZ();
+        $this->x2 = $pos->getFloorX();
+        $this->y2 = $pos->getFloorY();
+        $this->z2 = $pos->getFloorZ();
         $pk->dimension = DimensionIds::OVERWORLD;
-        $pk->spawnType = SetSpawnPositionPacket::TYPE_WORLD_SPAWN;
+        $pk->spawnType = SpawnPositionPacket::TYPE_WORLD_SPAWN;
         $player->getNetworkSession()->sendDataPacket($pk);
-	}
+    }
 
     public function onDrop(PlayerDropItemEvent $event){
         $player = $event->getPlayer();
